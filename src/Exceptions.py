@@ -1,0 +1,2 @@
+class MultipleSingletonInstantiationException(Exception):
+    pass
