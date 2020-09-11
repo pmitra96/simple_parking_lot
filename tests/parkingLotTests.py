@@ -70,7 +70,7 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
 
     def test_park_vehicle(self):
         """ if parking lot is empty , then slot 1 should be allocated"""
-        slot_number = self.parkingLot.park_vehicle(registration_number = "KA-01-HH-1234",color = "White")
+        slot_number = self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1234",color = "White")
         self.assertEqual(1,slot_number)
     
     def test_park_vehicle_when_full(self):
@@ -80,7 +80,7 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
         self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
         self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9996",color = "Red")
-        slot_number = self.parkingLot.park_vehicle(registration_number = "KA-01-HH-1254",color = "White")
+        slot_number = self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1254",color = "White")
         self.assertEqual(None,slot_number)
     
     def test_vehicle_exit(self):
