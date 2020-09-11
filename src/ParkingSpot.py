@@ -1,0 +1,2 @@
+class ParkingSpot:
+    pass
