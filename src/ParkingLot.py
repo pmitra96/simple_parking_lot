@@ -1,4 +1,8 @@
-from Exceptions import MultipleSingletonInstantiationException
+from src.Exceptions import MultipleSingletonInstantiationException
+from src.ParkingSlot import ParkingSlot
+from src.SlotManager import SlotManager
+from src.vehicles.Car import Car
+
 class ParkingLot:
     __instance = None
     @staticmethod
@@ -13,25 +17,28 @@ class ParkingLot:
         ParkingLot.__instance = None 
 
     def __init__(self,capacity):
-        """ Virtually private constructor. """
+        """ ----- Virtually private constructor. ----- """
         if ParkingLot.__instance != None:
             raise MultipleSingletonInstantiationException("class instance already created")
         else:
             ParkingLot.__instance = self
             self.__capacity = capacity
-            self.__size = 0 
+            self.__slotManager = SlotManager(self,self.__capacity)
 
-    def park_vehicle(self,type,registration_number,color):
-        if self.__size == 0:
-            self.__size+=1 
-            return 1 
-        elif self.__size == self.__capacity:
-            return None 
-        else:
-            self.__size+=1 
-            return self.__size
+   
+    def park_vehicle(self,vehicle_type,registration_number,color):
+        return self.__slotManager.park_vehicle(vehicle_type,registration_number,color)
 
-    def vehicle_exit(self,slot_number):
-        self.__size-=1 
-        return slot_number
+    def vehicle_exit(self,slot_id):
+        return self.__slotManager.vehicle_exit(slot_id)
+
+    def find_vehicle(self,registration_number):
+        return self.__slotManager.find_vehicle(registration_number)
     
+    def get_size(self):
+        return self.__slotManager.get_size()
+    
+    def get_capacity(self):
+        return self.__capacity
+    
+
