@@ -95,7 +95,7 @@ class SlotManager:
                 assigned_vehicle = slot.get_assigned_vehicle()
                 vehicle_color = assigned_vehicle.get_color()
                 vehicle_registration_number = assigned_vehicle.get_registration_number()
-                result_list.append((i,vehicle_registration_number,vehicle_color))
+                result_list.append((str(i),vehicle_registration_number,vehicle_color))
         return result_list
 
     def get_slots_map(self):

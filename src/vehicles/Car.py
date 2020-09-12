@@ -10,5 +10,5 @@ class Car(Vehicle):
 
     def assign_slot(self,slot):
         self.__slot = slot
-    
+        return self.__slot
     

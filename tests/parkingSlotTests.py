@@ -32,6 +32,7 @@ class parkingSlotTests(unittest.TestCase):
     
     def test_get_assigned_vehicle(self):
         """ if parking slot is not empty then assign the vehicle """
+        self.parkingSlot.assign_vehicle(self.car)
         car = self.parkingSlot.get_assigned_vehicle()
         self.assertEqual(self.car,car)
     

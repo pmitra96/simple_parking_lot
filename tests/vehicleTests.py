@@ -1,11 +1,10 @@
 import unittest 
 from src.ParkingLot import ParkingLot
 from src.ParkingSlot import ParkingSlot
-from src.vehicles import *
+from src.vehicles.Car import Car
 from src.Exceptions import MultipleSingletonInstantiationException
 
 #---------------------------------------------------------------------------------------------------#
-
 class CarTests(unittest.TestCase):
 
 # ------------------------------------------------------------------------------------------------- # 
@@ -32,9 +31,9 @@ class CarTests(unittest.TestCase):
 
     def test_assign_slot(self):
         assigned_slot = self.car.assign_slot(self.parkingSlot)
-        self.assertEqual(1,assigned_slot)
+        self.assertEqual(self.parkingSlot,assigned_slot)
 
-    def test_get_assigned_slot(self):
+    def test_get_slot(self):
         assigned_slot = self.car.assign_slot(self.parkingSlot)
-        self.assertEqual(assigned_slot,self.car.get_assigned_slot())
+        self.assertEqual(assigned_slot,self.car.get_slot())
 
