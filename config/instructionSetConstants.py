@@ -1,0 +1,8 @@
+CREATE_PARKING_LOT = 'create_parking_lot'
+PARK_CAR = 'park'
+CAR_EXIT = 'leave'
+PARKING_LOT_STATUS = 'status'
+GET_SLOTS_HAVING_CAR_OF_COLOR = 'slot_numbers_for_cars_with_colour'
+GET_REGISTRATION_NUMBERS_HAVING_COLOR = 'registration_numbers_for_cars_with_colour'
+SEARCH_SLOT_BY_REGISTRATION_NUMBER = 'slot_number_for_registration_number'
+EXIT_UI = 'exit'
