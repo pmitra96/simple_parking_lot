@@ -25,7 +25,6 @@ class ParkingLot:
             self.__capacity = capacity
             self.__slotManager = SlotManager(self,self.__capacity)
 
-   
     def park_vehicle(self,vehicle_type,registration_number,color):
         return self.__slotManager.park_vehicle(vehicle_type,registration_number,color)
 
@@ -35,6 +34,12 @@ class ParkingLot:
     def find_vehicle(self,registration_number):
         return self.__slotManager.find_vehicle(registration_number)
     
+    def get_registration_numbers_for_cars_with_color(self,color):
+        return self.__slotManager.registration_numbers_for_cars_with_color(color)
+    
+    def get_slot_numbers_for_cars_with_color(self,color):
+        return self.__slotManager.slot_numbers_for_cars_with_color(color)
+
     def get_size(self):
         return self.__slotManager.get_size()
     

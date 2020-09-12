@@ -61,6 +61,25 @@ class SlotManager:
         else:
             return None
 
+    def get_slots_having_cars_with_color(self,color):
+        result_list = []
+        for i in range(1,self.__capacity+1):
+            if self.__SlotsMap[i].get_assigned_vehicle() is not None:
+                slot = self.__SlotsMap[i]
+                assigned_vehicle = slot.get_assigned_vehicle()
+                vehicle_color = assigned_vehicle.get_color()
+                if vehicle_color == color:
+                    result_list.append(slot)
+        return result_list
+
+    def registration_numbers_for_cars_with_color(self,color):
+        slots_with_color = self.get_slots_having_cars_with_color(color)
+        return [slot.get_assigned_vehicle().get_registration_number() for slot in slots_with_color]
+
+    def slot_numbers_for_cars_with_color(self,color):
+        slots_with_color = self.get_slots_having_cars_with_color(color)
+        return [slot.get_slot_id() for slot in slots_with_color]
+
     def get_slots_map(self):
         return self.__SlotsMap
 
