@@ -70,28 +70,53 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
 
     def test_park_vehicle(self):
         """ if parking lot is empty , then slot 1 should be allocated"""
-        slot_number = self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
         self.assertEqual(1,slot_number)
     
     def test_park_vehicle_when_full(self):
         """ if parking lot is full , then None should be allocated"""
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1234",color = "White")
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9999",color = "White")
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9996",color = "Red")
-        slot_number = self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1254",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1254",color = "White")
         self.assertEqual(None,slot_number)
     
     def test_vehicle_exit(self):
         """ clear allocated slot and return slot number """
         ## test specific setup start ##
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-1234",color = "White")
-        self.parkingLot.park_vehicle(type = "car",registration_number = "KA-01-HH-9999",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
         ## test specific setup end ## 
         slot_number = self.parkingLot.vehicle_exit(1)
         self.assertEqual(1,slot_number)
     
+    def test_find_vehicle(self):
+        """ given a registration number find the slot where a vehicle is parked """ 
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        slot_number = self.parkingLot.find_vehicle(registration_number = "KA-01-HH-9996")
+        self.assertEqual(5,slot_number)
+
+    def test_assign_spot_complex(self):
+        """ give the spot nearest to the slot if entry is 0 """ 
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        self.parkingLot.vehicle_exit(2)
+        self.parkingLot.vehicle_exit(3)
+        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",color = "fieryRed")
+        self.assertEqual(2,slot_number1)        
+        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
+        self.assertEqual(3,slot_number2)
+
+
 
 
 
