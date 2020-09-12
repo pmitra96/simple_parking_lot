@@ -56,7 +56,7 @@ class ParkingLotUITests(unittest.TestCase):
         self.assertEqual("5",slot_number1)
         # find a non exisiting vehicle 
         self.parkingLot.vehicle_exit(5)
-        slot_number2 = self.parkingLot.find_vehicle(registration_number = "KA-01-HH-9996")
+        slot_number2 = self.parkingLotUI.find_vehicle(registration_number = "KA-01-HH-9996")
         self.assertEqual("Not found",slot_number2)
 
     def test_registration_numbers_for_cars_with_color(self):
@@ -82,12 +82,12 @@ class ParkingLotUITests(unittest.TestCase):
         self.parkingLot.vehicle_exit(3)
         slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",color = "White")
         slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
-        slot_ids_with_color = self.parkingLot.get_slot_numbers_for_cars_with_color("White")
+        slot_ids_with_color = self.parkingLotUI.get_slot_numbers_for_cars_with_color("White")
         # should give registration numbers in the same order as that of slots.
-        self.assertEqual("1, 2, 4",slot_ids_with_color)
+        self.assertEqual("1, 2",slot_ids_with_color)
         # since blue car left this must give empty
         ## TODO : verify this 
-        self.assertEqual("No cars with given color",self.parkingLot.get_slot_numbers_for_cars_with_color("Blue"))
+        self.assertEqual("No cars with given color",self.parkingLotUI.get_slot_numbers_for_cars_with_color("Blue"))
         
     def test_get_status_list(self):
         # self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
@@ -102,11 +102,11 @@ class ParkingLotUITests(unittest.TestCase):
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "FieryRed")
         response = self.parkingLotUI.get_status_list()
         expectedResponse = [
-            "Slot No.   Registration No     Colour      ",
-            "1          KA-01-HH-1234       White       ",
-            "2          KA-01-HH-9321       White       ",                        
-            "3          KA-01-HH-9124       FieryRed    ",
-            "4          KA-01-HH-9995       Pink        ",
-            "5          KA-01-HH-9996       Red         "
+            "Slot No.".ljust(10)+"Registration No".ljust(20)+"Colour".ljust(10),
+            "1".ljust(10)+"KA-01-HH-1234".ljust(20)+"White".ljust(10),
+            "2".ljust(10)+"KA-01-HH-9321".ljust(20)+"White".ljust(10),                        
+            "3".ljust(10)+"KA-01-HH-9124".ljust(20)+"FieryRed".ljust(10),
+            "4".ljust(10)+"KA-01-HH-9995".ljust(20)+"Pink".ljust(10),
+            "5".ljust(10)+"KA-01-HH-9996".ljust(20)+"Red".ljust(10),
         ]
         self.assertEqual(expectedResponse,response)        
