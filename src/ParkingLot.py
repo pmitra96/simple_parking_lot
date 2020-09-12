@@ -47,3 +47,5 @@ class ParkingLot:
         return self.__capacity
     
 
+    def get_status(self):
+        return self.__slotManager.get_status()
