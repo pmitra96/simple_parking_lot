@@ -1,7 +1,7 @@
 import unittest 
 import sys 
 from src.ParkingLot import ParkingLot
-from src import ParkingSpot
+from src import ParkingSlot
 from src.vehicles import *
 from src.Exceptions import MultipleSingletonInstantiationException
 
@@ -61,7 +61,7 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
     
     # this function gets called for before every test in the class 
     def setUp(self):
-        self.parkingLot = ParkingLot(5)
+        self.parkingLot = ParkingLot(7)
     
     # this function gets called after every test in the class
     def tearDown(self):
@@ -72,7 +72,14 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         """ if parking lot is empty , then slot 1 should be allocated"""
         slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
         self.assertEqual(1,slot_number)
-    
+        """ find vehicle should result in valid slot """ 
+        """ the corresponding slot should have valid vehicle """
+        """ vehicle should have valid slot """ 
+        vehicle_slot = self.parkingLot.find_vehicle("KA-01-HH-1234")
+        self.assertEqual(1,1)
+        
+
+
     def test_park_vehicle_when_full(self):
         """ if parking lot is full , then None should be allocated"""
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
@@ -80,6 +87,9 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        
         slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1254",color = "White")
         self.assertEqual(None,slot_number)
     
@@ -91,6 +101,8 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         ## test specific setup end ## 
         slot_number = self.parkingLot.vehicle_exit(1)
         self.assertEqual(1,slot_number)
+        self.assertEqual(None,self.parkingLot.find_vehicle("KA-01-HH-1234"))
+        self.assertEqual(1,self.parkingLot.get_size())
     
     def test_find_vehicle(self):
         """ given a registration number find the slot where a vehicle is parked """ 
@@ -99,8 +111,12 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
         self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
-        slot_number = self.parkingLot.find_vehicle(registration_number = "KA-01-HH-9996")
-        self.assertEqual(5,slot_number)
+        slot_number1 = self.parkingLot.find_vehicle(registration_number = "KA-01-HH-9996")
+        self.assertEqual(5,slot_number1)
+        # find a non exisiting vehicle 
+        self.parkingLot.vehicle_exit(5)
+        slot_number2 = self.parkingLot.find_vehicle(registration_number = "KA-01-HH-9996")
+        self.assertEqual(None,slot_number2)
 
     def test_assign_spot_complex(self):
         """ give the spot nearest to the slot if entry is 0 """ 
@@ -115,11 +131,6 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         self.assertEqual(2,slot_number1)        
         slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
         self.assertEqual(3,slot_number2)
-
-
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
