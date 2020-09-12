@@ -1,7 +1,6 @@
 import unittest 
-import sys 
 from src.ParkingLot import ParkingLot
-from src import ParkingSlot
+from src.ParkingSlot import ParkingSlot
 from src.vehicles import *
 from src.Exceptions import MultipleSingletonInstantiationException
 
