@@ -16,7 +16,7 @@ class parkingSlotTests(unittest.TestCase):
 
     def setUp(self):
         self.parkingSlot = ParkingSlot(1)
-        self.car = Car("KAA-12-BC12","White")
+        self.car = Car("KAA-12-BC12",21)
 
     def tearDown(self):
         self.parkingSlot = None 

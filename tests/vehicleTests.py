@@ -18,7 +18,7 @@ class CarTests(unittest.TestCase):
         print("tearing down vehicle class")
 
     def setUp(self):
-        self.car = Car("KAA-12-BC12","White")
+        self.car = Car("KAA-12-BC12",21)
         self.parkingSlot = ParkingSlot(1)
     
     def tearDown(self):

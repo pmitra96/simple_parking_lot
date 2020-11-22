@@ -69,7 +69,7 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
 
     def test_park_vehicle(self):
         """ if parking lot is empty , then slot 1 should be allocated"""
-        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
+        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",driver_age = 21)
         self.assertEqual(1,slot_number)
         """ find vehicle should result in valid slot """ 
         """ the corresponding slot should have valid vehicle """
@@ -79,30 +79,29 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         
 
     def park_5_vehicles(self):
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",color = "Blue")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",driver_age = 21)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",driver_age = 21)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9994",driver_age = 22)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",driver_age = 23)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",driver_age = 24)
         
 
     def test_park_vehicle_when_full(self):
         """ if parking lot is full , then None should be allocated"""
         self.park_5_vehicles()
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",color = "Pink")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",color = "Red")
-        
-        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1254",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9995",driver_age = 18)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9996",driver_age = 19)
+        slot_number = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1254",driver_age = 20)
         self.assertEqual(None,slot_number)
     
     def test_vehicle_exit(self):
         """ clear allocated slot and return slot number """
         ## test specific setup start ##
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",color = "White")
-        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",color = "White")
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-1234",driver_age = 21)
+        self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9999",driver_age = 21)
         ## test specific setup end ## 
-        slot_number = self.parkingLot.vehicle_exit(1)
-        self.assertEqual(1,slot_number)
+        exited_vehicle = self.parkingLot.vehicle_exit(1)
+        self.assertEqual("KA-01-HH-1234",exited_vehicle.get_registration_number())
         self.assertEqual(None,self.parkingLot.find_vehicle("KA-01-HH-1234"))
         self.assertEqual(1,self.parkingLot.get_size())
     
@@ -121,39 +120,39 @@ class ParkingLotBasicCRUDTests(unittest.TestCase):
         self.park_5_vehicles()
         self.parkingLot.vehicle_exit(2)
         self.parkingLot.vehicle_exit(3)
-        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",color = "fieryRed")
+        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",driver_age = 21)
         self.assertEqual(2,slot_number1)        
-        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
+        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",driver_age = 22)
         self.assertEqual(3,slot_number2)
 
 
-    def test_registration_numbers_for_cars_with_color(self):
-        """ should return registration numbers of slots with a given color in ascending order """
+    def test_registration_numbers_for_cars_with_driver_age(self):
+        """ should return registration numbers of slots with a given driver_age in ascending order """
         self.park_5_vehicles()
         self.parkingLot.vehicle_exit(2)
         self.parkingLot.vehicle_exit(3)
-        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",color = "White")
-        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
-        registration_numbers_with_color = self.parkingLot.get_registration_numbers_for_cars_with_color("White")
+        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",driver_age = 24)
+        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",driver_age = 24)
+        registration_numbers_with_driver_age = self.parkingLot.get_registration_numbers_for_cars_with_driver_age(24)
         # should give registration numbers in the same order as that of slots.
-        self.assertEqual(["KA-01-HH-1234","KA-01-HH-9321"],registration_numbers_with_color)
+        self.assertEqual(['KA-01-HH-9321', 'KA-01-HH-9124', 'KA-01-HH-9996'],registration_numbers_with_driver_age)
         # since blue car left this must give empty
-        self.assertEqual([],self.parkingLot.get_registration_numbers_for_cars_with_color("Blue"))
+        self.assertEqual([],self.parkingLot.get_registration_numbers_for_cars_with_driver_age(35))
         
     
 
-    def test_slot_ids_for_cars_with_color(self):
-        """ should return registration numbers of slots with a given color in ascending order """
+    def test_slot_ids_for_cars_with_driver_age(self):
+        """ should return registration numbers of slots with a given driver_age in ascending order """
         self.park_5_vehicles()
         self.parkingLot.vehicle_exit(2)
         self.parkingLot.vehicle_exit(3)
-        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",color = "White")
-        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",color = "fieryRed")
-        slot_ids_with_color = self.parkingLot.get_slot_numbers_for_cars_with_color("White")
+        slot_number1 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9321",driver_age = 24)
+        slot_number2 = self.parkingLot.park_vehicle(vehicle_type = "car",registration_number = "KA-01-HH-9124",driver_age = 21)
+        slot_ids_with_driver_age = self.parkingLot.get_slot_numbers_for_cars_with_driver_age(21)
         # should give registration numbers in the same order as that of slots.
-        self.assertEqual([1,2],slot_ids_with_color)
+        self.assertEqual([1,3],slot_ids_with_driver_age)
         # since blue car left this must give empty
-        self.assertEqual([],self.parkingLot.get_slot_numbers_for_cars_with_color("Blue"))
+        self.assertEqual([],self.parkingLot.get_slot_numbers_for_cars_with_driver_age(35))
         
     
     

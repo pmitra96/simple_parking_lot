@@ -7,9 +7,9 @@ Design a Parking lot The parking lot can hold upto maximum of n car. Every car t
 - create a parking lot 
 - vehicles can enter
 - vehicles can exit 
-- Registration numbers of all cars of a particular colour.
+- Registration numbers of all cars of a particular driver_age.
 - Slot number in which a car with a given registration number is parked.
-- Slot numbers of all slots where a car of a particular colour is parked.
+- Slot numbers of all slots where a car of a particular driver_age is parked.
 
 ## 2. Solution Approach
 classes : Cars,Slots,ParkingLot , ParkingLotUI , HomeUI , slotManager
@@ -20,26 +20,23 @@ ExecutionFlow :- HomeUI -> ParkingLOtUI -> ParkingLot -> SlotManager
 
 ## 3. Supported Commands
 
-- `create_parking_lot` <`capacity`>   
+- `Create_parking_lot` <`capacity`>   
 To create a Parking lot. Where `capacity` is the size of the parking lot
 
-- `park` <`car_registration_number`> <`car_color`>   
-To park the car in the parking lot and prints the allocated slot in the parking lot. Where `car_registration_number` is given registration number for the car and `car_color` is given color for the car
+- `Park` <`car_registration_number`> driver_age <`car_driver_age`>   
+To park the car in the parking lot and prints the allocated slot in the parking lot. Where `car_registration_number` is given registration number for the car and `car_driver_age` is given driver_age for the car
 
-- `leave` <`slot_id`>   
+- `Leave` <`slot_id`>   
 To leave the parking lot from desired slot and prints the leaving slot. given slot number. Where `slot_id` is given sloat number
 
-- `status`   
-To check the status of Parking Lot
+- `Slot_numbers_for_driver_of_age` <`driver_age`>   
+To prints the registration number of the cars for the given driver_age. Where `driver_age` is given driver_age
 
-- `slot_numbers_for_cars_with_colour` <`colour`>   
-To prints the registration number of the cars for the given colour. Where `color` is given colour
-
-- `slot_number_for_registration_number` <`registration_number`>   
+- `Slot_number_for_car_with_number` <`registration_number`>   
 prints the slot number of the cars for the given number. Where `registration_number` is given registration number.
 
-- `registration_numbers_for_cars_with_colour` <`colour`>   
-To prints the slot number of the cars for the given colour.  Where `colour` is given colour.
+- `Vehicle_registration_number_for_driver_of_age` <`driver_age`>   
+To prints the slot number of the cars for the given driver_age.  Where `driver_age` is given driver_age.
 
 - `exit` 
 To exit the application.
@@ -48,24 +45,17 @@ To exit the application.
 #### 4.1 Running the application in File mode:
 
 ```python
-./{parking_lot_dir}/bin/ParkingLot.py path_to_input_file
-```
 
-#### 4.2 Running the application in Interactive mode:
-
-```python
-./{parking_lot_dir}/bin/parking_lot
+cd {parking_lot_dir} && python -m src.HomeUI bin/input.txt
 ```
 
 ## 5. Test Cases
 - Total number of test cases - 30
 
 #### 5.1 For running the tests
-
 ```python
-./{parking_lot_dir}/bin/setup
+cd {parking_lot_dir} && python -m unittest discover tests/ "*py"
 ```
 
-#### examples 
-- for interactive mode :- examples/command_mode.png 
-- for file mode :- examples/file_mode.png
+## 5.3 Note 
+since the output for exceptional cases hasn't been specified , i'm returing `null` for all the exceptional cases.
